@@ -146,7 +146,7 @@ class _CardGameState extends State<CardGame> {
         onTap: () {
           flipFunction(cardIndex);
         },
-        child: singleCard(cardIndex));
+        child: getImageForCard(cardIndex));
   }
 
   void matchingCards(int selectedCardIndex) {
@@ -183,12 +183,11 @@ class _CardGameState extends State<CardGame> {
     });
   }
 
-  Image singleCard(int cardIndex) {
+  Image getImageForCard(int cardIndex) {
     if (visitedCardsList[cardIndex] == 0) {
       return Image.asset('assets/images/CardBack.png');
-    } else {
-      return Image.asset('assets/images/' + cardFaces[cardIndex] + '.png');
     }
+    return Image.asset('assets/images/' + cardFaces[cardIndex] + '.png');
   }
 
   void setupCards() {
