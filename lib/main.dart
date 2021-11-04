@@ -69,7 +69,7 @@ class _CardGameState extends State<CardGame> {
   1 == visited not matched
   2 == matched
    */
-  List<int> visited = List.filled(16, 0);
+  List<int> visitedCardsList = List.filled(16, 0);
   int numberFlips = 0, numberMatchedPairs = 0, numberFlipped = 0;
 
   @override
@@ -133,33 +133,34 @@ class _CardGameState extends State<CardGame> {
   }
 
   List<Widget> cardList() {
-    return List<Widget>.generate(16, (int i) {
+    return List<Widget>.generate(16, (int cardIndex) {
       //return Builder(builder: (BuildContext context) {
       return Builder(builder: (BuildContext context) {
-        return singleCardContainer(i);
+        return singleCardContainer(cardIndex);
       });
     });
   }
 
-  GestureDetector singleCardContainer(int i) {
+  GestureDetector singleCardContainer(int cardIndex) {
     return GestureDetector(
         onTap: () {
-          flipFunction(i);
+          flipFunction(cardIndex);
         },
-        child: singleCard(i));
+        child: singleCard(cardIndex));
   }
 
-  void matchingCards(int i) {
+  void matchingCards(int selectedCardIndex) {
     return setState(() {
-      if (visited[i] != 1) {
+      if (visitedCardsList[selectedCardIndex] != 1) {
         return;
       }
-      String card1 = txtImages[i];
-      for (int idx = 0; idx < txtImages.length; idx++) {
-        if (idx != i) {
-          if (visited[idx] == 1 && txtImages[idx] == card1) {
-            visited[i] = 2;
-            visited[idx] = 2;
+      String selectedCard = txtImages[selectedCardIndex];
+
+      for (int i = 0; i < txtImages.length; i++) {
+        if (i != selectedCardIndex) {
+          if (visitedCardsList[i] == 1 && txtImages[i] == selectedCard) {
+            visitedCardsList[selectedCardIndex] = 2;
+            visitedCardsList[i] = 2;
             numberMatchedPairs += 1;
             numberFlipped = 0;
           }
@@ -168,25 +169,25 @@ class _CardGameState extends State<CardGame> {
     });
   }
 
-  void flipFunction(int i) {
+  void flipFunction(int cardToFlip) {
     return setState(() {
-      if (visited[i] == 0 && numberFlipped < 2) {
-        visited[i] = 1;
+      if (visitedCardsList[cardToFlip] == 0 && numberFlipped < 2) {
+        visitedCardsList[cardToFlip] = 1;
         numberFlips += 1;
         numberFlipped += 1;
-        matchingCards(i);
-      } else if (visited[i] == 1) {
-        visited[i] = 0;
+        matchingCards(cardToFlip);
+      } else if (visitedCardsList[cardToFlip] == 1) {
+        visitedCardsList[cardToFlip] = 0;
         numberFlipped -= 1;
       }
     });
   }
 
-  Image singleCard(int i) {
-    if (visited[i] == 0) {
+  Image singleCard(int cardIndex) {
+    if (visitedCardsList[cardIndex] == 0) {
       return Image.asset('assets/images/CardBack.png');
     } else {
-      return Image.asset('assets/images/' + txtImages[i] + '.png');
+      return Image.asset('assets/images/' + txtImages[cardIndex] + '.png');
     }
   }
 
@@ -211,7 +212,7 @@ class _CardGameState extends State<CardGame> {
         'Skull'
       ];
       txtImages.shuffle();
-      visited = List.filled(16, 0);
+      visitedCardsList = List.filled(16, 0);
       numberFlips = 0;
       numberMatchedPairs = 0;
     });
