@@ -2,6 +2,30 @@
 
 import 'package:flutter/material.dart';
 
+const Color dkOrange = Color(0xFFFF6D00);
+const Color backgroundOrange = Color(0xFF9D5900);
+const Color dkLightOrange = Color(0xFFFFBB89);
+
+const darkTitleStyle = TextStyle(
+  fontFamily: 'Creepy',
+  fontSize: 30.0,
+  color: dkOrange,
+);
+
+const lightTitleStyle = TextStyle(
+  fontFamily: 'Lunacy',
+  fontSize: 30.0,
+  fontWeight: FontWeight.bold,
+  color: dkLightOrange,
+);
+
+const bodyTextStyle = TextStyle(
+  fontFamily: 'Lunacy',
+  fontSize: 20.0,
+  fontWeight: FontWeight.bold,
+  color: dkLightOrange,
+);
+
 void main() {
   runApp(const MyApp());
 }
@@ -10,24 +34,19 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   static const String title = 'Mix and Match';
-  static const Color dkOrange = Color(0xFFFF6D00);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        backgroundColor: const Color(0xFF9D5900),
+        backgroundColor: backgroundOrange,
         appBar: AppBar(
-            backgroundColor: const Color(0xFF9D5900),
+            backgroundColor: backgroundOrange,
             title: const Center(
               child: Text(
                 title,
-                style: TextStyle(
-                  fontFamily: 'Creepy',
-                  fontSize: 30.0,
-                  color: dkOrange,
-                ),
+                style: darkTitleStyle,
               ),
             )),
         body: const CardGame(),
@@ -52,7 +71,7 @@ class _CardGameState extends State<CardGame> {
    */
   List<int> visited = List.filled(16, 0);
   int numberFlips = 0, numberMatchedPairs = 0, numberFlipped = 0;
-  static const Color dkLightOrange = Color(0xFFFFBB89);
+
   @override
   void initState() {
     super.initState();
@@ -82,12 +101,7 @@ class _CardGameState extends State<CardGame> {
               onPressed: setupCards,
               child: const Text(
                 'RESET',
-                style: TextStyle(
-                  fontFamily: 'Lunacy',
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold,
-                  color: dkLightOrange,
-                ),
+                style: lightTitleStyle,
               ),
             ),
           ],
@@ -104,24 +118,14 @@ class _CardGameState extends State<CardGame> {
           padding: const EdgeInsets.all(10.0),
           child: Text(
             'Number of Flips: $numberFlips',
-            style: const TextStyle(
-              fontFamily: 'Lunacy',
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-              color: dkLightOrange,
-            ),
+            style: bodyTextStyle,
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: Text(
             'Number of Pairs: $numberMatchedPairs',
-            style: const TextStyle(
-              fontFamily: 'Lunacy',
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-              color: dkLightOrange,
-            ),
+            style: bodyTextStyle,
           ),
         ),
       ],
