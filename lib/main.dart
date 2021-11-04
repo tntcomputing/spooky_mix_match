@@ -63,7 +63,7 @@ class CardGame extends StatefulWidget {
 }
 
 class _CardGameState extends State<CardGame> {
-  late List<String> txtImages;
+  late List<String> cardFaces;
   /*
   0 == not visited
   1 == visited not matched
@@ -154,11 +154,11 @@ class _CardGameState extends State<CardGame> {
       if (visitedCardsList[selectedCardIndex] != 1) {
         return;
       }
-      String selectedCard = txtImages[selectedCardIndex];
+      String selectedCard = cardFaces[selectedCardIndex];
 
-      for (int i = 0; i < txtImages.length; i++) {
+      for (int i = 0; i < cardFaces.length; i++) {
         if (i != selectedCardIndex) {
-          if (visitedCardsList[i] == 1 && txtImages[i] == selectedCard) {
+          if (visitedCardsList[i] == 1 && cardFaces[i] == selectedCard) {
             visitedCardsList[selectedCardIndex] = 2;
             visitedCardsList[i] = 2;
             numberMatchedPairs += 1;
@@ -187,13 +187,13 @@ class _CardGameState extends State<CardGame> {
     if (visitedCardsList[cardIndex] == 0) {
       return Image.asset('assets/images/CardBack.png');
     } else {
-      return Image.asset('assets/images/' + txtImages[cardIndex] + '.png');
+      return Image.asset('assets/images/' + cardFaces[cardIndex] + '.png');
     }
   }
 
   void setupCards() {
     return setState(() {
-      txtImages = [
+      cardFaces = [
         'Bat',
         'Bones',
         'Eye',
@@ -211,7 +211,7 @@ class _CardGameState extends State<CardGame> {
         'Pumpkin',
         'Skull'
       ];
-      txtImages.shuffle();
+      cardFaces.shuffle();
       visitedCardsList = List.filled(16, 0);
       numberFlips = 0;
       numberMatchedPairs = 0;
